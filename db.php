@@ -50,23 +50,20 @@ function register($StdID, $full_name, $email, $phone_number, $address){
 function get_student_details($student_id){
     global $conn;
     global $conn_msg;
+    
     try {
         $query = $conn->prepare('SELECT * FROM student_records WHERE student_id =  ?');
-        $query->bindParam(1, $student_id, PDO::PARAM_STR);
+        $query->bindParam(1, $student_id, PDO::PARAM_INT);    
         $query->execute();
-        $result = $query->fetch();
-    
-        if (empty($result)){
+        $result = $query->fetchAll();
+
+        if (!$result){
             return "<label class = 'text-danger'> The provided Admission Number does not exist $student_id <label>";
         }
         else {
-        return "<label>Student Information</label></br>
-                Admission Number : ".$result['student_id']."</br>
-                Name : ". $result['full_Name']."</br>
-                Email : ". $result['email']."</br>
-                Phone Number : ".$result['phone_number']."</br>
-                Home Address : ".$result['home_address']."";   
+            return "User found";   
         }
+        
     } 
     catch (Exception $e){
         echo '<script language="javascript">';

@@ -22,7 +22,7 @@
   <span class="text-info"><?php echo $conn_msg; ?></span>
     <div class="form-group">
       <label for="name">Insert Student Admin Number</label>
-      <input type="text" name="student_ID" class="form-control"  placeholder="Enter Admin_no" required/>
+      <input type="text" name="student_id" class="form-control"  placeholder="Enter Admin_no" required/>
     </div>
     <button type="submit" name="submit" class="btn btn-default">Submit</button>
   </form>
@@ -32,13 +32,16 @@
   <?php
 	if(isset($_POST['submit']))
 	{   
-		$student_id = trim($_POST['student_ID']);
+		$student_id = $_POST['student_id'];
         $response = $client->call('get_student_details',array("student_id"=>$student_id));
         
-		if(empty($response))
-			echo "The student ID provided does not exist";
-		else
-			echo $response;
+		if($response){
+      echo $response;
+    }   
+		else{
+      echo $response;
+    }
+     
 	}
    ?>
 
